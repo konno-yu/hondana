@@ -1,14 +1,12 @@
 import { css } from '@emotion/react';
+import { Kanban } from './kanban';
 import { Header } from '/components/Header';
-import { InputTodoForm } from '/components/InputTodoForm';
-import { TodoList } from '/components/TodoList';
 
 const Home = () => {
   return (
     <div css={rootStyle}>
       <Header />
-      <InputTodoForm />
-      <TodoList />
+      <Kanban />
     </div>
   );
 };
