@@ -57,13 +57,17 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
-  font-family: 'Zen Maru Gothic', sans-serif;
+  font-family: 'Verdana', sans-serif;
   color: #757575;
 }
 
 a {
   color: inherit;
   text-decoration: none;
+}
+
+input {
+  font-family: 'Verdana', sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {

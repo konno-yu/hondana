@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
-import supabase from "/utils/supabase";
+import { useState, useEffect } from 'react';
+import supabase from '/utils/supabase';
 
 export const useAddTodo = () => {
-    const [todo, setTodo] = useState([]);
-    
-    useEffect(() => {
-        fetchTodos();
-    }, []);
+  const [todo, setTodo] = useState([]);
 
-    const fetchTodos = async () => {
-        const datas = await supabase.from('todos').select("*");
-        setTodo(datas.data);
-    }
+  useEffect(() => {
+    fetchTodos();
+  }, []);
 
-    return { todo, fetchTodos };
-}
+  const fetchTodos = async () => {
+    // const datas = await supabase.from('todos').select("*");
+    // setTodo(datas.data);
+    setTodo([]);
+  };
+
+  return { todo, fetchTodos };
+};

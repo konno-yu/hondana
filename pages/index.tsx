@@ -7,8 +7,8 @@ const Home = () => {
   return (
     <div css={rootStyle}>
       <Header />
-      <InputTodoForm />
-      <TodoList />
+      {/* <InputTodoForm />
+      <TodoList /> */}
     </div>
   );
 };

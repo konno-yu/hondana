@@ -1,47 +1,28 @@
 import { css } from '@emotion/react';
-import { BsFillKanbanFill, BsGridFill } from 'react-icons/bs';
-import { FaThList } from 'react-icons/fa';
+import { InitialConfigType, LexicalComposer } from '@lexical/react/LexicalComposer';
+import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
+import { ContentEditable } from '@lexical/react/LexicalContentEditable';
+import LexicalErrorBoundary from '@lexical/react/LexicalErrorBoundary';
+import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
 
 export const Header = () => {
+  const onError = () => {};
+
+  const initialConfig: InitialConfigType = {
+    namespace: 'MyEditor',
+    onError,
+    editable: true,
+  };
+
   return (
     <div css={header}>
-      <div css={buttons}>
-        {createHeaderButton('一覧', <FaThList size={18} style={{ marginRight: 8 }} />)}
-        {createHeaderButton('カンバン', <BsFillKanbanFill size={18} style={{ marginRight: 8 }} />)}
-        {createHeaderButton('ギャラリー', <BsGridFill size={18} style={{ marginRight: 8 }} />)}
-      </div>
+      <LexicalComposer initialConfig={initialConfig}>
+        <RichTextPlugin contentEditable={<ContentEditable css={input} />} placeholder={<></>} ErrorBoundary={LexicalErrorBoundary} />
+        <HistoryPlugin />
+      </LexicalComposer>
     </div>
   );
 };
-
-const createHeaderButton = (label: string, icon: JSX.Element) => {
-  return (
-    <div css={button}>
-      {icon}
-      {label}
-    </div>
-  );
-};
-
-const button = css`
-  cursor: pointer;
-  padding: 4px 10px;
-  height: 100%;
-  border-radius: 4px;
-  width: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  text-align: center;
-  &:hover {
-    background: #eeeeee;
-    color: #9e9e9e;
-  }
-  &:active {
-    background: #fff;
-    color: #757575;
-  }
-`;
 
 const header = css`
   height: 10%;
@@ -49,15 +30,23 @@ const header = css`
   background: #fff;
   font-weight: 600;
   display: flex;
-  justify-content: right;
+  justify-content: center;
   align-items: center;
 `;
 
-const buttons = css`
-  height: 100%;
-  width: 40%;
-  padding: 8px 0;
+const input = css`
+  height: 50%;
+  width: 70%;
+  padding: 0 20px;
+  border-radius: 100px;
+  border: 1.5px solid #dddddd;
+  &:focus {
+    outline: none;
+    border: 1.5px solid #999999;
+  }
+  color: #999999;
+  font-size: 9pt;
+  font-weight: 500;
   display: flex;
-  justify-content: space-evenly;
   align-items: center;
 `;
