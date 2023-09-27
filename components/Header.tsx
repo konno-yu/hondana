@@ -36,7 +36,7 @@ const header = css`
 
 const input = css`
   height: 50%;
-  width: 70%;
+  width: 90%;
   padding: 0 20px;
   border-radius: 100px;
   border: 1.5px solid #dddddd;
@@ -44,8 +44,8 @@ const input = css`
     outline: none;
     border: 1.5px solid #999999;
   }
-  color: #999999;
-  font-size: 9pt;
+  color: #333333;
+  font-size: 12px;
   font-weight: 500;
   display: flex;
   align-items: center;
