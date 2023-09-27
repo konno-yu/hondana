@@ -1,21 +1,22 @@
 import { css } from '@emotion/react';
-import { Header } from '/components/Header';
-import { InputTodoForm } from '/components/InputTodoForm';
-import { TodoList } from '/components/TodoList';
+import BookDrawer from '../components/BookDrawer';
+import SectionDrawer from '/components/SectionDrawer';
+import AwarenessDrawer from '/components/AwarenessDrawer';
 
 const Home = () => {
   return (
     <div css={rootStyle}>
-      <Header />
-      {/* <InputTodoForm />
-      <TodoList /> */}
+      <BookDrawer />
+      <SectionDrawer />
+      <AwarenessDrawer />
     </div>
   );
 };
 
 const rootStyle = css`
   height: 100vh;
-  /* background: gray; */
+  width: 100%;
+  display: flex;
 `;
 
 export default Home;
