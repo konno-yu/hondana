@@ -18,5 +18,15 @@ export const useBooks = () => {
     return response;
   };
 
-  return { books, setBooks, fetchBooks, postBooks };
+  const putBooks = async (id: number, book: { title: string; author: string; rate: number }) => {
+    const response = await supabase.from('books').update(book).eq('id', id);
+    return response;
+  };
+
+  const deleteBooks = async (id: number, table: string) => {
+    const response = await supabase.from(table).delete().eq('id', id);
+    return response;
+  };
+
+  return { books, setBooks, fetchBooks, postBooks, putBooks, deleteBooks };
 };

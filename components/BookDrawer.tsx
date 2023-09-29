@@ -7,10 +7,11 @@ import { useBooks } from './useBooks';
 
 const BookDrawer = () => {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [id, setId] = useState(null);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [rate, setRate] = useState(0);
-  const { books, postBooks, fetchBooks } = useBooks();
+  const { books, postBooks, fetchBooks, putBooks, deleteBooks } = useBooks();
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -32,6 +33,7 @@ const BookDrawer = () => {
   };
 
   const resetInput = () => {
+    setId(null);
     setTitle('');
     setAuthor('');
     setRate(0);
@@ -45,13 +47,48 @@ const BookDrawer = () => {
   };
 
   const closeDlgWithSave = () => {
-    postBooks({ title, author, rate }).then((res) => {
-      if (res.status >= 200 && res.status <= 300) {
-        fetchBooks();
-        resetInput();
-        if (dialogRef.current) {
-          dialogRef.current.close();
+    if (id) {
+      putBooks(id, { title, author, rate }).then((res) => {
+        if (res.status === 204) {
+          fetchBooks();
+          resetInput();
+          if (dialogRef.current) {
+            dialogRef.current.close();
+          }
+        } else {
+          throw new Error('予期せぬエラーです');
         }
+      });
+    } else {
+      postBooks({ title, author, rate }).then((res) => {
+        if (res.status >= 200 && res.status <= 300) {
+          fetchBooks();
+          resetInput();
+          if (dialogRef.current) {
+            dialogRef.current.close();
+          }
+        } else {
+          throw new Error('予期せぬエラーです');
+        }
+      });
+    }
+  };
+
+  const handleEdit = (id) => {
+    const editTarget = books.find((book) => book.id === id);
+    setId(id);
+    setTitle(editTarget.title);
+    setAuthor(editTarget.author);
+    setRate(editTarget.rate);
+    if (dialogRef.current) {
+      dialogRef.current.showModal();
+    }
+  };
+
+  const handleDelete = (id, category) => {
+    deleteBooks(id, category).then((res) => {
+      if (res.status === 204) {
+        fetchBooks();
       } else {
         throw new Error('予期せぬエラーです');
       }
@@ -68,9 +105,16 @@ const BookDrawer = () => {
         <BsFillPlusSquareFill color="#333333" onClick={openDlg} style={{ cursor: 'pointer' }} />
       </div>
       <div style={{ height: '95%' }}>
-        <DrawerElm icon={<BsCircleFill height="100%" color="#333333" />} sentence="すべての本" />
+        <DrawerElm category="books" id={-1} icon={<BsCircleFill height="100%" color="#333333" />} sentence="すべての本" />
         {books.map((book) => (
-          <DrawerElm icon={<BsCircleHalf height="100%" color="#333333" />} sentence={book.title} />
+          <DrawerElm
+            category="books"
+            id={book.id}
+            icon={<BsCircleHalf height="100%" color="#333333" />}
+            sentence={book.title}
+            onEditClick={handleEdit}
+            onDeleteClick={handleDelete}
+          />
         ))}
       </div>
       <dialog css={dialog} ref={dialogRef}>
