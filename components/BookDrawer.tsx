@@ -49,14 +49,16 @@ const BookDrawer = () => {
       <div css={header}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <BsBookFill color="#333333" />
-          <span style={{ color: '#333333', fontWeight: 700 }}>Books</span>
+          <span style={{ color: '#333333', fontWeight: 900 }}>Books</span>
         </div>
         <BsFillPlusSquareFill color="#333333" onClick={openDlg} style={{ cursor: 'pointer' }} />
       </div>
-      <DrawerElm icon={<BsCircleFill height="100%" color="#333333" />} sentence="すべての本" />
-      {dammy.map((d) => (
-        <DrawerElm icon={<BsCircleHalf height="100%" color="#333333" />} sentence={d} />
-      ))}
+      <div style={{ height: '95%' }}>
+        <DrawerElm icon={<BsCircleFill height="100%" color="#333333" />} sentence="すべての本" />
+        {books.map((book) => (
+          <DrawerElm icon={<BsCircleHalf height="100%" color="#333333" />} sentence={book.title} />
+        ))}
+      </div>
       <dialog css={dialog} ref={dialogRef}>
         <div style={{ textAlign: 'center', height: '10%', fontSize: '22pt', fontWeight: 700 }}>Add Books</div>
 
@@ -126,11 +128,6 @@ const BookDrawer = () => {
     </div>
   );
 };
-
-const myInput = css`
-  border: none;
-  height: 100px;
-`;
 
 const drawer = css`
   height: 100%;

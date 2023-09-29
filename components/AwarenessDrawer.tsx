@@ -10,16 +10,18 @@ const AwarenessDrawer = () => {
   ];
   return (
     <div css={drawer}>
-      <div style={{ height: '90%' }}>
-        <div css={header}>
-          <BsLightbulbFill color="#333333" />
-          <span style={{ color: '#333333', fontWeight: 700 }}>Awareness</span>
-        </div>
-        {dammy.map((d) => (
-          <DrawerElm icon={<BsCheckCircleFill color="#333333" />} sentence={d} />
-        ))}
+      <div css={header}>
+        <BsLightbulbFill color="#333333" />
+        <span style={{ color: '#333333', fontWeight: 900 }}>Awareness</span>
       </div>
-      <Header />
+      <div style={{ height: '95%' }}>
+        <div style={{ height: '90%' }}>
+          {dammy.map((d) => (
+            <DrawerElm icon={<BsCheckCircleFill color="#333333" />} sentence={d} />
+          ))}
+        </div>
+        <Header />
+      </div>
     </div>
   );
 };

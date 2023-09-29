@@ -10,14 +10,16 @@ const SectionDrawer = () => {
       <div css={header}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
           <TbSectionSign color="#333333" />
-          <span style={{ color: '#333333', fontWeight: 700 }}>Sections</span>
+          <span style={{ color: '#333333', fontWeight: 900 }}>Sections</span>
         </div>
         <BsFillPlusSquareFill color="#333333" />
       </div>
-      <DrawerElm icon={<BsBookmarksFill height="100%" color="#333333" />} sentence="すべてのセクション" />
-      {dammy.map((d) => (
-        <DrawerElm icon={<BsBookmarkFill height="100%" color="#333333" />} sentence={d} />
-      ))}
+      <div style={{ height: '95%' }}>
+        <DrawerElm icon={<BsBookmarksFill height="100%" color="#333333" />} sentence="すべてのセクション" />
+        {dammy.map((d) => (
+          <DrawerElm icon={<BsBookmarkFill height="100%" color="#333333" />} sentence={d} />
+        ))}
+      </div>
     </div>
   );
 };
