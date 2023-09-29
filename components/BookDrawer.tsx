@@ -1,15 +1,16 @@
 import { css } from '@emotion/react';
-import { BsBookFill, BsCircleFill, BsCircleHalf, BsFillBookFill, BsFillPersonFill, BsFillPlusSquareFill, BsFillStarFill } from 'react-icons/bs';
+import { BsBookFill, BsCircleFill, BsCircleHalf, BsFillPlusSquareFill } from 'react-icons/bs';
 import DrawerElm from './DrawerElm';
 import { useRef, useState } from 'react';
 import { Input } from './Input';
+import { useBooks } from './useBooks';
 
 const BookDrawer = () => {
-  const dammy = ['解像度を上げ', 'センスは知識からはじめる', '不確実性 超入門'];
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
-  const [rate, setRate] = useState(1);
+  const [rate, setRate] = useState(0);
+  const { books, postBooks, fetchBooks } = useBooks();
 
   const onChangeTitle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -30,18 +31,31 @@ const BookDrawer = () => {
     }
   };
 
+  const resetInput = () => {
+    setTitle('');
+    setAuthor('');
+    setRate(0);
+  };
+
   const closeDlg = () => {
     if (dialogRef.current) {
+      resetInput();
       dialogRef.current.close();
     }
   };
 
   const closeDlgWithSave = () => {
-    // TODO supabase
-    console.log(title, author, rate);
-    if (dialogRef.current) {
-      dialogRef.current.close();
-    }
+    postBooks({ title, author, rate }).then((res) => {
+      if (res.status >= 200 && res.status <= 300) {
+        fetchBooks();
+        resetInput();
+        if (dialogRef.current) {
+          dialogRef.current.close();
+        }
+      } else {
+        throw new Error('予期せぬエラーです');
+      }
+    });
   };
 
   return (
