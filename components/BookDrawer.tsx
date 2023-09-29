@@ -84,6 +84,7 @@ const BookDrawer = () => {
           <div style={{ display: 'flex', gap: 16, flexDirection: 'row' }}>
             <span style={{ width: '20%' }}>Useful</span>
             <select value={rate} onChange={onChangeRate} style={{ border: 'none', width: 200, fontWeight: 600, color: '#333' }}>
+              <option value="0">☆☆☆ - 評価前</option>
               <option value="1">★☆☆ - もう読まない</option>
               <option value="2">★★☆ - 時間があれば読む</option>
               <option value="3">★★★ - また読みたい</option>
