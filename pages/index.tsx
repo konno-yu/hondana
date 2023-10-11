@@ -3,6 +3,7 @@ import BookDrawer from '../components/BookDrawer';
 import SectionDrawer from '/components/SectionDrawer';
 import AwarenessDrawer from '/components/AwarenessDrawer';
 import { Major_Mono_Display } from 'next/font/google';
+import { useState } from 'react';
 
 const MMD400 = Major_Mono_Display({
   weight: '400',
@@ -10,6 +11,11 @@ const MMD400 = Major_Mono_Display({
 });
 
 const Home = () => {
+  const [selected, setSelected] = useState(-1);
+
+  const handleSelectChange = (newSelected) => {
+    setSelected(newSelected);
+  };
   return (
     <div css={rootStyle}>
       <div
@@ -18,7 +24,7 @@ const Home = () => {
           fontSize: 24,
           height: '5%',
           width: '100%',
-          background: '#eceff1',
+          background: '#f5f5f5',
           borderBottom: '0.5px solid #DEDEDE',
           display: 'flex',
           alignItems: 'flex-start',
@@ -31,8 +37,8 @@ const Home = () => {
         HONDANA
       </div>
       <div style={{ display: 'flex', height: '100%', width: '100%' }}>
-        <BookDrawer />
-        <SectionDrawer />
+        <BookDrawer selected={selected} onChange={handleSelectChange} />
+        <SectionDrawer bookId={selected} />
         <AwarenessDrawer />
       </div>
     </div>
