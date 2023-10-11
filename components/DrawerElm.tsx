@@ -8,17 +8,18 @@ interface DrawerElmProps {
   icon: ReactNode;
   sentence: string;
   selected: boolean;
+  showContextMenu?: boolean;
   onRowClick: (id) => void;
   onEditClick?: (id) => void;
   onDeleteClick?: (id, category) => void;
 }
 
-const DrawerElm = ({ id, category, icon, sentence, selected, onRowClick, onEditClick, onDeleteClick }: DrawerElmProps) => {
+const DrawerElm = ({ id, category, icon, sentence, selected, showContextMenu = true, onRowClick, onEditClick, onDeleteClick }: DrawerElmProps) => {
   const [show, setShow] = useState(false);
 
   return (
     <div css={elmStyle(selected)} onClick={() => onRowClick(id)} onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
-      {show && id > 0 && (
+      {showContextMenu && show && id > 0 && (
         <div css={contextMenu}>
           <AiFillEdit size={18} color="#333" onClick={() => onEditClick(id)} />
           <AiFillDelete size={18} color="#333" onClick={() => onDeleteClick(id, category)} />
