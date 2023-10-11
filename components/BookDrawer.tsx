@@ -1,16 +1,17 @@
 import { css } from '@emotion/react';
 import { BsBookFill, BsCircleFill, BsCircleHalf, BsFillPlusSquareFill } from 'react-icons/bs';
 import DrawerElm from './DrawerElm';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Input } from './Input';
 import { useBooks } from './useBooks';
 
-const BookDrawer = () => {
+const BookDrawer = ({ selected, onChange }: { selected: number; onChange: (selected: number) => void }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [id, setId] = useState(null);
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [rate, setRate] = useState(0);
+  // TODO 上の階層か
   const { books, postBooks, fetchBooks, putBooks, deleteBooks } = useBooks();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -107,6 +108,10 @@ const BookDrawer = () => {
     });
   };
 
+  const handleClick = (id) => {
+    onChange(id);
+  };
+
   return (
     <div css={drawer}>
       <div css={header}>
@@ -117,13 +122,22 @@ const BookDrawer = () => {
         <BsFillPlusSquareFill color="#333333" onClick={openDlg} style={{ cursor: 'pointer' }} />
       </div>
       <div style={{ height: '95%' }}>
-        <DrawerElm category="books" id={-1} icon={<BsCircleFill height="100%" color="#333333" />} sentence="すべての本" />
+        <DrawerElm
+          selected={selected === -1}
+          onRowClick={() => onChange(-1)}
+          category="books"
+          id={-1}
+          icon={<BsCircleFill height="100%" color="#333333" />}
+          sentence="すべての本"
+        />
         {books.map((book) => (
           <DrawerElm
+            selected={book.id === selected}
             category="books"
             id={book.id}
             icon={<BsCircleHalf height="100%" color="#333333" />}
             sentence={book.title}
+            onRowClick={handleClick}
             onEditClick={handleEdit}
             onDeleteClick={handleDelete}
           />
