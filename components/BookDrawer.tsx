@@ -37,10 +37,7 @@ const BookDrawer = ({ selected, onChange }: { selected: number; onChange: (selec
   }, [isOpen]);
 
   const openDlg = () => {
-    // if (dialogRef.current) {
     setIsOpen(true);
-    //   dialogRef.current.showModal();
-    // }
   };
 
   const resetInput = () => {
@@ -51,11 +48,8 @@ const BookDrawer = ({ selected, onChange }: { selected: number; onChange: (selec
   };
 
   const closeDlg = () => {
-    // if (dialogRef.current) {
     resetInput();
     setIsOpen(false);
-    //   dialogRef.current.close();
-    // }
   };
 
   const closeDlgWithSave = () => {
