@@ -11,11 +11,17 @@ const MMD400 = Major_Mono_Display({
 });
 
 const Home = () => {
-  const [selected, setSelected] = useState(-1);
+  const [selectedBook, setSelectedBook] = useState(-1);
+  const [selectedSection, setSelectedSection] = useState(-1);
 
-  const handleSelectChange = (newSelected) => {
-    setSelected(newSelected);
+  const handleSelectedBookChange = (newSelected) => {
+    setSelectedBook(newSelected);
   };
+
+  const handleSelectedSectionChange = (newSelected) => {
+    setSelectedSection(newSelected);
+  };
+
   return (
     <div css={rootStyle}>
       <div
@@ -37,8 +43,8 @@ const Home = () => {
         HONDANA
       </div>
       <div style={{ display: 'flex', height: '100%', width: '100%' }}>
-        <BookDrawer selected={selected} onChange={handleSelectChange} />
-        <SectionDrawer bookId={selected} />
+        <BookDrawer selected={selectedBook} onChange={handleSelectedBookChange} />
+        <SectionDrawer bookId={selectedBook} selected={selectedSection} onChange={handleSelectedSectionChange} />
         <AwarenessDrawer />
       </div>
     </div>

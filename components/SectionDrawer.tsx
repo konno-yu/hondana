@@ -8,7 +8,7 @@ import { AiFillDelete } from 'react-icons/ai';
 import { useSections } from './useSections';
 
 export type Section = Array<{ index: number; title: string }>;
-const SectionDrawer = ({ bookId }: { bookId: number }) => {
+const SectionDrawer = ({ bookId, selected, onChange }: { bookId: number; selected: number; onChange: (selected: number) => void }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const { sections, fetchSections, postSections, putSections } = useSections();
@@ -81,6 +81,10 @@ const SectionDrawer = ({ bookId }: { bookId: number }) => {
     setEditableSections((prev) => [...prev, { index: prev.length + 1, title: '' }]);
   };
 
+  const handleClick = (id: number) => {
+    onChange(id);
+  };
+
   return (
     <div css={drawer}>
       <div css={header}>
@@ -92,8 +96,8 @@ const SectionDrawer = ({ bookId }: { bookId: number }) => {
       </div>
       <div style={{ height: '95%' }}>
         <DrawerElm
-          selected={false}
-          onRowClick={null}
+          selected={selected === -2}
+          onRowClick={() => onChange(-2)}
           category="sections"
           id={-2}
           icon={<BsBookmarksFill height="100%" color="#333333" />}
@@ -103,12 +107,13 @@ const SectionDrawer = ({ bookId }: { bookId: number }) => {
           ?.find((sec) => sec.book_id === bookId)
           ?.section?.map((section) => (
             <DrawerElm
-              selected={false}
-              onRowClick={null}
+              selected={section.index === selected}
+              onRowClick={handleClick}
               category="sections"
-              id={100}
+              id={section.index}
               icon={<BsBookmarkFill height="100%" color="#333333" />}
               sentence={section.title}
+              showContextMenu={false}
             />
           ))}
       </div>
